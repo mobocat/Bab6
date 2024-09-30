@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Penjualan Barang</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffcc;
+        }
+        .container {
+            width: 300px;
+            margin: auto;
+            background-color: yellow;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px 0px gray;
+        }
+        .container h2 {
+            background-color: blue;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            border-radius: 10px 10px 0 0;
+            margin: -20px -20px 20px -20px;
+        }
+        input, button {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            box-sizing: border-box;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background-color: gray;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: darkgray;
+        }
+        .row {
+            display: flex;
+            justify-content: space-between;
+        }
+        .row button {
+            width: 48%;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>FORM PENJUALAN BARANG</h2>
+    
+    <label for="kodeBarang">Kode Barang</label>
+    <div class="row">
+        <input type="text" id="kodeBarang" placeholder="Masukkan Kode Barang">
+        <button onclick="cariBarang()">Cari</button>
+    </div>
+
+    <label for="namaBarang">Nama Barang</label>
+    <input type="text" id="namaBarang" disabled>
+
+    <label for="hargaBarang">Harga Barang</label>
+    <input type="text" id="hargaBarang" disabled>
+
+    <label for="jumlahBarang">Jumlah Barang</label>
+    <div class="row">
+        <input type="number" id="jumlahBarang">
+        <button onclick="hitungTotal()">Hitung</button>
+    </div>
+
+    <label for="totalHarga">Total Harga</label>
+    <input type="text" id="totalHarga" disabled>
+
+    <label for="diskon">Diskon</label>
+    <input type="text" id="diskon" disabled>
+
+    <label for="totalBayar">Total Bayar</label>
+    <input type="text" id="totalBayar" disabled>
+
+    <button onclick="cetak()">Cetak</button>
+</div>
+
+<script>
+    // Data barang
+    const barangList = {
+        'A001': {nama: 'Televisi Samsung 50"', harga: 5000000},
+        'A002': {nama: 'VCD Player Sony', harga: 750000},
+        'A003': {nama: 'Mini Compo', harga: 2300000}
+    };
+
+    // Fungsi untuk mencari barang berdasarkan kode
+    function cariBarang() {
+        const kodeBarang = document.getElementById("kodeBarang").value;
+        const barang = barangList[kodeBarang];
+        
+        if (barang) {
+            document.getElementById("namaBarang").value = barang.nama;
+            document.getElementById("hargaBarang").value = barang.harga;
+        } else {
+            alert("Kode Barang tidak ditemukan");
+        }
+    }
+
+    // Fungsi untuk menghitung total harga, diskon, dan total bayar
+    function hitungTotal() {
+        const hargaBarang = parseInt(document.getElementById("hargaBarang").value);
+        const jumlahBarang = parseInt(document.getElementById("jumlahBarang").value);
+
+        if (isNaN(hargaBarang) || isNaN(jumlahBarang)) {
+            alert("Mohon masukkan jumlah barang yang valid");
+            return;
+        }
+
+        const totalHarga = hargaBarang * jumlahBarang;
+        let diskon = 0;
+
+        if (jumlahBarang > 10) {
+            diskon = 0.12 * hargaBarang;
+        }
+
+        const totalBayar = totalHarga - diskon;
+
+        document.getElementById("totalHarga").value = totalHarga;
+        document.getElementById("diskon").value = diskon;
+        document.getElementById("totalBayar").value = totalBayar;
+    }
+
+    // Fungsi untuk mencetak (saat ini hanya alert)
+    function cetak() {
+        alert("Mencetak ke printer...");
+    }
+</script>
+
+</body>
+</html>
